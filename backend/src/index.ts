@@ -1,4 +1,4 @@
-﻿import dotenv from "dotenv";
+import dotenv from "dotenv";
 import express, { Request, Response, NextFunction } from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -158,7 +158,7 @@ async function sheetsAction<T>(
     })
   });
 
-  const data = await response.json();
+  const data = (await response.json()) as { ok?: boolean; message?: string; [key: string]: any };
 
   if (!data.ok) {
     throw new Error(data.message || "Google Sheets API error");
