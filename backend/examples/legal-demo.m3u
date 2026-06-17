@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="demo.channel" tvg-name="Canal Demo Legal" group-title="Canais Demo",Canal Demo Legal
+https://example.invalid/live/demo-channel.m3u8
+#EXTINF:-1 group-title="Filmes Demo",Filme Demo Legal
+https://example.invalid/movies/demo-movie.m3u8
+#EXTINF:-1 group-title="Séries Demo",Minha Série S01E01 - Piloto
+https://example.invalid/series/minha-serie/s01e01.m3u8

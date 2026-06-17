@@ -1,0 +1,41 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">StreamPilot Logo</title>
+  <desc id="desc">Play button with compass and signal arcs for StreamPilot.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#13294B"/>
+      <stop offset="55%" stop-color="#07111F"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+    <linearGradient id="blueViolet" x1="126" y1="130" x2="386" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="0.52" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="100" y1="88" x2="410" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0F2FE"/>
+      <stop offset="0.28" stop-color="#22D3EE"/>
+      <stop offset="0.62" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.13 0 0 0 0 0.82 0 0 0 0 0.93 0 0 0 0.55 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="188" fill="#020617" stroke="#13233D" stroke-width="6"/>
+  <path d="M256 38L280 105H232L256 38Z" fill="url(#blueViolet)" filter="url(#glow)"/>
+  <path d="M256 474L232 407H280L256 474Z" fill="url(#blueViolet)" filter="url(#glow)"/>
+  <path d="M38 256L105 232V280L38 256Z" fill="url(#blueViolet)" filter="url(#glow)"/>
+  <path d="M474 256L407 280V232L474 256Z" fill="url(#blueViolet)" filter="url(#glow)"/>
+  <path d="M158 140C103 194 96 281 141 343" stroke="url(#ring)" stroke-width="16" stroke-linecap="round" opacity="0.95"/>
+  <path d="M371 154C420 207 424 287 384 345" stroke="url(#ring)" stroke-width="16" stroke-linecap="round" opacity="0.95"/>
+  <path d="M215 176C215 160 233 151 246 160L340 225C362 240 362 272 340 287L246 352C233 361 215 352 215 336V176Z" fill="url(#blueViolet)" filter="url(#glow)"/>
+  <path d="M306 166C337 174 361 198 369 229" stroke="#22D3EE" stroke-width="16" stroke-linecap="round" opacity="0.92"/>
+  <path d="M303 214C316 219 325 228 330 241" stroke="#3B82F6" stroke-width="14" stroke-linecap="round" opacity="0.95"/>
+</svg>

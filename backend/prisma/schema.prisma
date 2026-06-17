@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  playlists    Playlist[]
+  mediaItems   MediaItem[]
+  categories   Category[]
+  histories    WatchHistory[]
+  favorites    Favorite[]
+  epgSources   EpgSource[]
+  epgPrograms  EpgProgram[]
+}
+
+model Playlist {
+  id          String      @id @default(cuid())
+  userId      String
+  name        String
+  url         String
+  lastSyncAt  DateTime?
+  syncStatus  String      @default("NEVER")
+  syncError   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaItems  MediaItem[]
+
+  @@index([userId])
+}
+
+model Category {
+  id         String      @id @default(cuid())
+  userId     String
+  name       String
+  type       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaItems MediaItem[]
+
+  @@unique([userId, name, type])
+  @@index([userId, type])
+}
+
+model MediaItem {
+  id              String         @id @default(cuid())
+  userId          String
+  playlistId      String
+  categoryId      String?
+  title           String
+  normalizedTitle String
+  type            String
+  streamUrl       String
+  tvgId           String?
+  tvgName         String?
+  logo            String?
+  groupTitle      String?
+  seriesName      String?
+  seasonNumber    Int?
+  episodeNumber   Int?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  playlist        Playlist       @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  category        Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  histories       WatchHistory[]
+  favorites       Favorite[]
+  epgPrograms     EpgProgram[]
+
+  @@unique([playlistId, streamUrl])
+  @@index([userId, type])
+  @@index([userId, normalizedTitle])
+  @@index([tvgId])
+  @@index([seriesName])
+}
+
+model WatchHistory {
+  id              String    @id @default(cuid())
+  userId          String
+  mediaItemId     String
+  progressSeconds Int       @default(0)
+  durationSeconds Int       @default(0)
+  percent         Float     @default(0)
+  completed       Boolean   @default(false)
+  lastWatchedAt   DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaItem       MediaItem @relation(fields: [mediaItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, mediaItemId])
+  @@index([userId, lastWatchedAt])
+}
+
+model Favorite {
+  id          String    @id @default(cuid())
+  userId      String
+  mediaItemId String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaItem   MediaItem @relation(fields: [mediaItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, mediaItemId])
+  @@index([userId])
+}
+
+model EpgSource {
+  id         String     @id @default(cuid())
+  userId     String
+  name       String
+  url        String
+  lastSyncAt DateTime?
+  syncStatus String     @default("NEVER")
+  syncError  String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model EpgProgram {
+  id          String     @id @default(cuid())
+  userId      String
+  mediaItemId String?
+  channelId   String
+  title       String
+  description String?
+  category    String?
+  start       DateTime
+  end         DateTime
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaItem   MediaItem? @relation(fields: [mediaItemId], references: [id], onDelete: SetNull)
+
+  @@index([userId, channelId])
+  @@index([mediaItemId, start])
+  @@index([start, end])
+}

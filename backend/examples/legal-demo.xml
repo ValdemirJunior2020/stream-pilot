@@ -1,0 +1,10 @@
+<tv>
+  <channel id="demo.channel">
+    <display-name>Canal Demo Legal</display-name>
+  </channel>
+  <programme start="20260615120000 +0000" stop="20260615130000 +0000" channel="demo.channel">
+    <title>Programa Demo Atual</title>
+    <desc>Dados fictícios para teste local.</desc>
+    <category>Demo</category>
+  </programme>
+</tv>
